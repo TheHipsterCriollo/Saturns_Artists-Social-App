@@ -1,13 +1,15 @@
 var view = {
+  user: null,
   getLogin: function getLogin() {
     var formulario = document.createElement('div');
+    var reg = 'register';
     formulario.setAttribute('id', 'formularioLogin');
     formulario.innerHTML = `
     <form id="login">
-    <input type="user" name="user"placeholder="Usuario"><br>
-    <input type="password" name="pass"placeholder="Contraseña"><br>
-    <span>Si no tienes cuenta </span><a href="register.html">regístrate</a>
+    <input type="text" name="user" placeholder="Usuario" /><br>
+    <input type="password" name="pass" placeholder="Contraseña" /><br>
     </form>
+    <span>Si no tienes cuenta </span><a href='#'>regístrate</a>
     <div id="saturns"><h1>SATURNS</h1><h4>take your design to higher level</h4></div>
     <div class="images">
     <img src="images/img/planet2.png">
@@ -18,8 +20,7 @@ var view = {
     formulario.querySelector('form').addEventListener('submit', function(e) {
       e.preventDefault();
       that.onLogin(e.target.user.value, e.target.pass.value);
-      e.target.user.value = '';
-      e.target.pass.value = '';
+      console.log('got it');
     });
     return formulario;
   },
@@ -60,6 +61,10 @@ var view = {
     <input type="submit" class="submitReg">
     </form>
     `;
+    registro.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      that.onRegister(e.target.user.name, e.target.subName.value, e.target.user.value, e.target.pass.value, e.target.email.value, e.target.pais.value);
+    });
     return registro;
   },
 
@@ -106,13 +111,28 @@ var view = {
     return post;
   },
 
-  render: function() {
+  render: function(pagina) {
     var container = document.getElementById('container');
     var login = this.getLogin();
     var registro = this.getRegistro();
     var upload = this.getUpload();
     var post = this.getPost();
-    container.appendChild(upload);
+    switch (pagina) {
+      default:
+      container.appendChild(login);
+      break;
+      case 'home':
+        container.appendChild(home);
+        break;
+      case 'register':
+        container.appendChild(registro);
+        break;
+      case 'upload':
+        container.appendChild(upload);
+        break;
+      case 'post':
+        container.appendChild(post);
+        break;
+    }
   }
-
 };
