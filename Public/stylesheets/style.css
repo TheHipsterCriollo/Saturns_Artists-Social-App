@@ -1,0 +1,178 @@
+@font-face {
+  font-family: 'gotham';
+  src: url('fonts/GOTHAM-LIGHT.TTF') format('truetype');
+}
+
+@font-face {
+  font-family: 'gothamBold';
+  src: url('fonts/GOTHAM-BOLD.TTF') format('truetype');
+}
+
+@font-face {
+  font-family: 'gothamThin';
+  src: url('fonts/GOTHAM-THIN.TTF') format('truetype');
+}
+
+body, html {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: gotham;
+}
+
+
+/*---LOGIN---*/
+
+body {
+
+  background-color: #26223e;
+}
+
+#formularioLogin input {
+  margin: 20px 0;
+  width: 370px;
+  height: 51px;
+  font-family: gothamThin;
+  padding: 5px;
+  font-size: 24px;
+  border-width: 0px;
+  border-color: #FFFFFF;
+  background-color: #f26522;
+  color: #FFFFFF;
+  border-style: solid;
+  border-radius: 34px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, .75);
+  text-shadow: undefined 0px 0px 5px px rgba(66, 66, 66, .75);
+}
+
+#formularioLogin input:focus {
+  outline: none;
+}
+
+#formularioLogin ::-webkit-input-placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+#formularioLogin span, a {
+  font-family: gothamThin;
+  font-size: 22px;
+  color: white;
+    text-decoration: none;
+}
+
+#formularioLogin a{
+  font-family: gothamBold;
+}
+
+#login {
+  float: left;
+  width: 380px;
+  height: 200px;
+  margin-left: 60px;
+  margin-top: 405px;
+}
+
+#saturns {
+  float: right;
+  margin-top: 135px;
+  margin-right: 35px;
+}
+
+#saturns h1 {
+  font-family: gothamThin;
+  font-size: 86px;
+  color: white;
+  letter-spacing: 40px;
+}
+
+#saturns h4 {
+  margin-top: -30px;
+  font-family: gothamBold;
+  font-size: 34px;
+  color: white;
+  letter-spacing: 4px;
+}
+
+.images {
+  float: right;
+  margin-top: 140px;
+  margin-right: 55px;
+  z-index: -1;
+}
+
+.images img {
+    margin: 0 15px;
+}
+
+/*------*/
+/*---REGISTRO---*/
+
+#registro {
+  margin-top: 100px;
+  margin-left: 22.5%;
+  column-count: 2;
+  width: 55%;
+  height: 597px;
+  background-color: white;
+  /*--display: flex;--*/
+}
+
+#registro input {
+
+  width: 300px;
+  height: 45px;
+  font-family: gothamThin;
+  padding: 5px;
+  font-size: 24px;
+  border-width: 0px;
+  border-color: #FFFFFF;
+  background-color: #f26522;
+  color: #FFFFFF;
+  border-style: solid;
+  border-radius: 34px;
+}
+
+#registro input:focus {
+  outline: none;
+}
+
+#registro h3 {
+  font-family: gothamThin;
+  font-size: 22px;
+  color: black;
+}
+
+#registro .submitReg {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  float: right;
+  cursor: pointer;
+  padding: 5px;
+  -webkit-border-radius: 45px;
+  border-radius: 45px;
+  font-family: gotham;
+  font-size: 26px;
+  color: rgba(255,255,255,0.9);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: #26223e;
+}
+
+#registro .submitReg:hover {
+  background: #4e4a67;
+  background-image: -webkit-linear-gradient(top, #4e4a67, #4e4a67);
+  background-image: -moz-linear-gradient(top, #4e4a67, #4e4a67);
+  background-image: -ms-linear-gradient(top, #4e4a67, #4e4a67);
+  background-image: -o-linear-gradient(top, #4e4a67, #4e4a67);
+  background-image: linear-gradient(to bottom, #4e4a67, #4e4a67);
+  text-decoration: none;
+}
+
+/*------*/
