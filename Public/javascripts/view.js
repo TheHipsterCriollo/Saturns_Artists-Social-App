@@ -8,7 +8,7 @@ var view = {
     <form id="login">
     <input type="text" name="user" placeholder="Usuario" /><br>
     <input type="password" name="pass" placeholder="Contraseña" /><br>
-    <span>Si no tienes cuenta </span><a href='#'>regístrate</a>
+    <span>Si no tienes cuenta </span><a>regístrate</a>
     <input type="submit" style="display: none" />
     </form>
     <div id="saturns"><h1>SATURNS</h1><h4>take your design to higher level</h4></div>
@@ -21,6 +21,10 @@ var view = {
     formulario.querySelector('form').addEventListener('submit', function(e) {
       e.preventDefault();
       that.onLogin(e.target.user.value, e.target.pass.value);
+    });
+    formulario.querySelector('a').addEventListener('click', (e) => {
+      e.preventDefault();
+      that.render('register');
     });
     return formulario;
   },

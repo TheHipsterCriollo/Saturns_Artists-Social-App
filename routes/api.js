@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var api = express.Router();
 const fileUpload = require('express-fileupload');
 const client = require('mongodb').MongoClient;
+var path = require('path');
 
 api.use(fileUpload());
 api.use(bodyParser.urlencoded({
@@ -32,6 +33,22 @@ api.get('/users', (req, res) => {
       } else {
         res.json({
           mensaje: 'could not load all users or there is no any user'
+        });
+      }
+    })
+});
+api.get('/posts', (req, res) => {
+  db.collection('posts')
+    .find({})
+    .toArray((err, posts) => {
+      if (!err) {
+        res.json({
+          mensaje: 'ok',
+          posts: posts
+        });
+      } else {
+        res.json({
+          mensaje: 'could not load all posts or there is no any post'
         });
       }
     })
@@ -108,14 +125,14 @@ api.post('/api/uploadProfImg/:email', (req, res) => {
   });
 });
 */
-api.post('/api/upload/:user', (req, res) => {
+api.post('/upload/:user', (req, res) => {
   if (!req.files) {
     return res.json({
       mensaje: 'not uploaded image'
     });
   }
   var upload = req.files.img;
-  upload.mv(path.join(__dirname, `Public/images/${upload.name}`), (err) => {
+  upload.mv(path.join(__dirname, `../Public/images/posts/${upload.name}`), (err) => {
     if (!err) {
       res.json({
         mensaje: 'Image was moved to folder'
@@ -126,7 +143,7 @@ api.post('/api/upload/:user', (req, res) => {
         description: req.body.description,
         likes: 0,
         comments: {}
-      }
+      };
       db.collection('posts').insert(newPost, (err) => {
         if (!err) {
           res.json({
@@ -138,10 +155,10 @@ api.post('/api/upload/:user', (req, res) => {
           });
         }
       });
-
     } else {
       res.json({
-        mensaje: 'could not create post',
+        mensaje: 'could not create posts',
+        err: err
       });
     }
   });

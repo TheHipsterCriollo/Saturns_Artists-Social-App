@@ -9,13 +9,18 @@ var controller = function controller(view) {
       console.log(res.users);
     }
   });
+  fetch('http://localhost:3000/api/posts').then((res) => res.json()).then((res) => {
+    if (res.mensaje == 'ok') {
+      console.log(res.posts);
+    }
+  });
 
   view.onLogin = function onLogin(user, pass) {
     console.log('recibido: ' + user + ' ' + pass);
     var params = new URLSearchParams();
     params.set('user', user);
     params.set('pass', pass);
-    fetch(`http://localhost:3000/api/login`, {
+    fetch(`${location.origin}/api/login`, {
         method: 'POST',
         body: params
       }).then((res) => res.json())
@@ -59,7 +64,7 @@ var controller = function controller(view) {
     .then((res) => res.json())
     .then((res) => {
       console.log(res);
-      vista.render('home');
+      view.render('home');
     });
 };
 view.render('login');
