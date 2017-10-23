@@ -8,8 +8,9 @@ var view = {
     <form id="login">
     <input type="text" name="user" placeholder="Usuario" /><br>
     <input type="password" name="pass" placeholder="Contraseña" /><br>
-    </form>
     <span>Si no tienes cuenta </span><a href='#'>regístrate</a>
+    <input type="submit" style="display: none" />
+    </form>
     <div id="saturns"><h1>SATURNS</h1><h4>take your design to higher level</h4></div>
     <div class="images">
     <img src="images/img/planet2.png">
@@ -20,7 +21,6 @@ var view = {
     formulario.querySelector('form').addEventListener('submit', function(e) {
       e.preventDefault();
       that.onLogin(e.target.user.value, e.target.pass.value);
-      console.log('got it');
     });
     return formulario;
   },
@@ -61,9 +61,10 @@ var view = {
     <input type="submit" class="submitReg">
     </form>
     `;
+    that = this;
     registro.querySelector('form').addEventListener('submit', function(e) {
       e.preventDefault();
-      that.onRegister(e.target.user.name, e.target.subName.value, e.target.user.value, e.target.pass.value, e.target.email.value, e.target.pais.value);
+      that.onRegister(e.target.user.name, e.target.subName.value, e.target.user.value, e.target.pass.value, e.target.email.value, e.target.pais.value, e.target.profile_pic.files[0]);
     });
     return registro;
   },
@@ -73,14 +74,19 @@ var view = {
     upload.setAttribute('id', 'uploadPost');
     upload.innerHTML = `
     <form id="uploading">
-    <h3>Sube tus diseños (máximo 3)</h3>
-    <input type="file" id="images" name="images"
-         accept=".jpg, .jpeg, .png" multiple>
+    <h3>Sube tu diseño</h3>
+    <input type="file" id="images" name="img"
+         accept=".jpg, .jpeg, .png">
     <h3>Comenta:</h3>
     <input type="text" name="description"><br>
     <input type="submit">
     </form>
     `;
+    that = this;
+    upload.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      that.onUpload(e.target.img.files[0], e.target.description.value, that.user.user);
+    });
     return upload;
   },
 
@@ -113,25 +119,25 @@ var view = {
 
   render: function(pagina) {
     var container = document.getElementById('container');
+    container.innerHTML = '';
     var login = this.getLogin();
     var registro = this.getRegistro();
     var upload = this.getUpload();
     var post = this.getPost();
     switch (pagina) {
-      default:
-      container.appendChild(login);
+      default: container.appendChild(login);
       break;
-      case 'home':
-        container.appendChild(home);
+      case 'post':
+          container.appendChild(post);
         break;
       case 'register':
-        container.appendChild(registro);
+          container.appendChild(registro);
         break;
       case 'upload':
-        container.appendChild(upload);
+          container.appendChild(upload);
         break;
       case 'post':
-        container.appendChild(post);
+          container.appendChild(post);
         break;
     }
   }

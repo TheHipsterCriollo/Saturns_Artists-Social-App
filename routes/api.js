@@ -48,7 +48,7 @@ api.post('/login', (req, res) => {
       });
     } else {
       res.json({
-        mensaje: 'loged',
+        mensaje: 'logged',
         user: user[0]
       });
     }
@@ -83,6 +83,65 @@ api.post('/register', (req, res) => {
     } else {
       res.json({
         mensaje: 'user already exist'
+      });
+    };
+  });
+});
+/*
+api.post('/api/uploadProfImg/:email', (req, res) => {
+  if (!req.files) {
+    return res.json({ mensaje: 'no profile image' });
+  }
+  var foto = req.files.img;
+  foto.mv(path.join(__dirname, 'Public/images/profileImg/${foto.name}'), (err) => {
+    if (!err) {
+      res.json({ mensaje: 'Image was moved to folder'});
+
+      db.collection('users').updateOne({ email: req.params.email}, {
+        $set: {
+          img: foto.name
+        }
+      });
+    } else {
+      res.json({ mensaje: 'could update image', error: err});
+    }
+  });
+});
+*/
+api.post('/api/upload/:user', (req, res) => {
+  if (!req.files) {
+    return res.json({
+      mensaje: 'not uploaded image'
+    });
+  }
+  var upload = req.files.img;
+  upload.mv(path.join(__dirname, `Public/images/${upload.name}`), (err) => {
+    if (!err) {
+      res.json({
+        mensaje: 'Image was moved to folder'
+      });
+      var newPost = {
+        user: req.params.user,
+        img: upload.name,
+        description: req.body.description,
+        likes: 0,
+        comments: {}
+      }
+      db.collection('posts').insert(newPost, (err) => {
+        if (!err) {
+          res.json({
+            mensaje: 'post created'
+          });
+        } else {
+          res.json({
+            mensaje: 'could not create post'
+          });
+        }
+      });
+
+    } else {
+      res.json({
+        mensaje: 'could not create post',
       });
     }
   });
