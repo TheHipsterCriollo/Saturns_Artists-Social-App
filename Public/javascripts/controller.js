@@ -6,12 +6,15 @@ var controller = function controller(view) {
 
   fetch('http://localhost:3000/api/users').then((res) => res.json()).then((res) => {
     if (res.mensaje == 'ok') {
-      console.log(res.users);
+      // console.log(res.users);
     }
   });
-  fetch('http://localhost:3000/api/posts').then((res) => res.json()).then((res) => {
+//REVISAR POSTS
+  fetch('http://localhost:3000/api/home').then((res) => res.json()).then((res) => {
     if (res.mensaje == 'ok') {
-      console.log(res.posts);
+      view.posts = res.posts;
+      // console.log(res.posts);
+      view.render('home');
     }
   });
 
@@ -29,7 +32,7 @@ var controller = function controller(view) {
           console.log(res);
           view.user = res.user;
           console.log('logged');
-          view.render('upload');
+          view.render('home', posts);
         }
       });
   };
@@ -64,7 +67,7 @@ var controller = function controller(view) {
     .then((res) => res.json())
     .then((res) => {
       console.log(res);
-      view.render('home');
+      view.render('home', posts);
     });
 };
 view.render('login');

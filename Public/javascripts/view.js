@@ -1,5 +1,7 @@
 var view = {
   user: null,
+  posts: null,
+
   getLogin: function getLogin() {
     var formulario = document.createElement('div');
     var reg = 'register';
@@ -94,24 +96,25 @@ var view = {
     return upload;
   },
 
-  getPost: function getPost() {
+  getPost: function getPost(post) {
     var post = document.createElement('div');
     post.setAttribute('id', 'post');
     post.innerHTML = `
       <div id='izq'>
-      <!-- IMAGENES----->
+      <img src='Public/img/posts/${post.img}' />
       </div>
       <div id='der'>
       <div class='header'>
       <!-- userImg----->
-      <h5>UserName</h5>
+      <h5>${post.user}</h5>
+      <p>${post.description}</p>
       </div>
       <div clas='comments'>
       <!-- commets----->
       </div>
       <div class='comment'>
     <form id="comment">
-    <input type="button" name="like" value="LIKE">
+    <input type="button" name="like" value="LIKE ${post.likes}">
     <input type="text" name="comentario" placeholder="Da tu opinion"><br>
     <input type="submit">
     </form>
@@ -121,6 +124,41 @@ var view = {
     return post;
   },
 
+  getPostsHome: function getPostsHome(post) {
+    var postH = document.createElement('div');
+    postH.setAttribute('id', 'postH');
+    postH.innerHTML = `
+    <a>
+      <img src='images/posts/${post.img}' />
+      <!-- userImg----->
+      <h5>${post.user}</h5>
+      <p>${post.description}</p>
+    </a>
+    `;
+    return postH;
+  },
+
+  getPosts: function getPosts() {
+    var biblioteca = document.createElement('div');
+    biblioteca.setAttribute('id', 'biblioteca');
+    var that = this;
+    var posts = that.posts;
+    console.log(posts);
+    posts.forEach(function(post) {
+      var post = that.getPostsHome(post);
+      biblioteca.appendChild(post);
+    });
+    return biblioteca;
+  },
+
+  // getHome: function(posts) {
+  //   var home = document.createElement('div');
+  //   home.setAttribute('id', 'home');
+  //   var biblio = this.getPosts(posts);
+  //   home.appendChild(biblio);
+  //   return home;
+  // },
+
   render: function(pagina) {
     var container = document.getElementById('container');
     container.innerHTML = '';
@@ -128,11 +166,15 @@ var view = {
     var registro = this.getRegistro();
     var upload = this.getUpload();
     var post = this.getPost();
+    var home = this.getPosts();
     switch (pagina) {
-      default: container.appendChild(login);
+      default: container.appendChild(upload);
       break;
       case 'post':
           container.appendChild(post);
+        break;
+      case 'home':
+          container.appendChild(home);
         break;
       case 'register':
           container.appendChild(registro);

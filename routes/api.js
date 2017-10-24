@@ -37,7 +37,8 @@ api.get('/users', (req, res) => {
       }
     })
 });
-api.get('/posts', (req, res) => {
+
+api.get('/home', (req, res) => {
   db.collection('posts')
     .find({})
     .toArray((err, posts) => {
