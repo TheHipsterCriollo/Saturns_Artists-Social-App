@@ -142,7 +142,7 @@ api.post('/upload/:user', (req, res) => {
         user: req.params.user,
         img: upload.name,
         description: req.body.description,
-        likes: 0,
+        likes: [],
         comments: {}
       };
       db.collection('posts').insert(newPost, (err) => {
@@ -163,6 +163,35 @@ api.post('/upload/:user', (req, res) => {
       });
     }
   });
+});
+
+api.get('api/post/:img', (req, res) => {
+  db.collection('posts').find({
+    user: req.body.user,
+    img: req.body.img
+  }).toArray((err, post) => {
+    if (!err) {
+      res.json({
+        mensaje: 'ok',
+        post: post
+      });
+    } else {
+      res.json({
+        mensaje: 'could load post'
+      });
+    }
+  })
+});
+
+api.post('api/post/:img/likes', (req, res) => {
+  db.collection('posts').updateOne({
+    user: req.body.user,
+    img: req.body.img
+  }, {
+    $push: {
+      likes: req.body.user
+    }
+  })
 });
 
 module.exports = api;

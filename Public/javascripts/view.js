@@ -1,5 +1,6 @@
 var view = {
   user: null,
+  post: null,
   posts: null,
 
   getLogin: function getLogin() {
@@ -96,7 +97,8 @@ var view = {
     return upload;
   },
 
-  getPost: function getPost(post) {
+  getPost: function getPost() {
+    console.log(post);
     var post = document.createElement('div');
     post.setAttribute('id', 'post');
     post.innerHTML = `
@@ -121,6 +123,10 @@ var view = {
     </div>
     </div>
     `;
+    post.querySelector('button').addEventListener('click', (e) => {
+      e.preventDefault();
+      that.onLiked(post, this.user.user);
+    });
     return post;
   },
 
@@ -129,21 +135,25 @@ var view = {
     postH.setAttribute('id', 'postH');
     postH.innerHTML = `
     <a>
-      <img src='images/posts/${post.img}' />
-      <!-- userImg----->
       <h5>${post.user}</h5>
+      <img src='images/posts/${post.img}' />
       <p>${post.description}</p>
-    </a>
+      </a>
     `;
+    var that = this;
+    postH.querySelector('a').addEventListener('click', (e) => {
+      e.preventDefault();
+      that.onSelectedPost(post);
+    });
     return postH;
   },
 
   getPosts: function getPosts() {
+    //console.log('wubba lubba dub dub: ' + this.posts);
     var biblioteca = document.createElement('div');
     biblioteca.setAttribute('id', 'biblioteca');
+    var posts = this.posts;
     var that = this;
-    var posts = that.posts;
-    console.log(posts);
     posts.forEach(function(post) {
       var post = that.getPostsHome(post);
       biblioteca.appendChild(post);
@@ -168,7 +178,7 @@ var view = {
     var post = this.getPost();
     var home = this.getPosts();
     switch (pagina) {
-      default: container.appendChild(upload);
+      default: container.appendChild(home);
       break;
       case 'post':
           container.appendChild(post);
