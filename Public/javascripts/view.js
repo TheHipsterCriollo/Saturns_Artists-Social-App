@@ -98,7 +98,6 @@ var view = {
   },
 
   getPost: function getPost() {
-    console.log(post);
     var post = document.createElement('div');
     post.setAttribute('id', 'post');
     post.innerHTML = `
@@ -115,22 +114,49 @@ var view = {
       <!-- commets----->
       </div>
       <div class='comment'>
-    <form id="comment">
     <input type="button" name="like" value="LIKE ${post.likes}">
+    <form id="comment">
     <input type="text" name="comentario" placeholder="Da tu opinion"><br>
     <input type="submit">
     </form>
     </div>
     </div>
     `;
-    post.querySelector('button').addEventListener('click', (e) => {
+    post.querySelectorAll('input')[0].addEventListener('click', (e) => {
       e.preventDefault();
+      console.log('soy un like');
       that.onLiked(post, this.user.user);
+    });
+    post.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      that.onComment(e.target.comentario.value, this.user.user, this.post);
     });
     return post;
   },
 
-  getPostsHome: function getPostsHome(post) {
+  getPosts: function getPosts() {
+    console.log(posts);
+    //console.log('wubba lubba dub dub: ' + this.posts);
+    var biblioteca = document.createElement('div');
+    biblioteca.setAttribute('id', 'biblioteca');
+    biblioteca.innerHTML = `
+    <button> SUBIR </button>
+    `;
+    var that = this;
+    biblioteca.querySelector('button').addEventListener('click', (e) => {
+      e.preventDefault();
+      that.render('upload');
+    });
+    var posts = this.posts;
+    var that = this;
+    posts.forEach(function(post) {
+      var post = that.getEachPost(post);
+      biblioteca.appendChild(post);
+    });
+    return biblioteca;
+  },
+
+  getEachPost: function getEachPost(post) {
     var postH = document.createElement('div');
     postH.setAttribute('id', 'postH');
     postH.innerHTML = `
@@ -138,6 +164,7 @@ var view = {
       <h5>${post.user}</h5>
       <img src='images/posts/${post.img}' />
       <p>${post.description}</p>
+      <div class='footer'></div>
       </a>
     `;
     var that = this;
@@ -148,37 +175,18 @@ var view = {
     return postH;
   },
 
-  getPosts: function getPosts() {
-    //console.log('wubba lubba dub dub: ' + this.posts);
-    var biblioteca = document.createElement('div');
-    biblioteca.setAttribute('id', 'biblioteca');
-    var posts = this.posts;
-    var that = this;
-    posts.forEach(function(post) {
-      var post = that.getPostsHome(post);
-      biblioteca.appendChild(post);
-    });
-    return biblioteca;
-  },
-
-  // getHome: function(posts) {
-  //   var home = document.createElement('div');
-  //   home.setAttribute('id', 'home');
-  //   var biblio = this.getPosts(posts);
-  //   home.appendChild(biblio);
-  //   return home;
-  // },
-
   render: function(pagina) {
     var container = document.getElementById('container');
     container.innerHTML = '';
+
     var login = this.getLogin();
     var registro = this.getRegistro();
     var upload = this.getUpload();
     var post = this.getPost();
     var home = this.getPosts();
+
     switch (pagina) {
-      default: container.appendChild(home);
+      default: container.appendChild(login);
       break;
       case 'post':
           container.appendChild(post);
@@ -191,9 +199,6 @@ var view = {
         break;
       case 'upload':
           container.appendChild(upload);
-        break;
-      case 'post':
-          container.appendChild(post);
         break;
     }
   }

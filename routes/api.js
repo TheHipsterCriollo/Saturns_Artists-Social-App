@@ -78,6 +78,14 @@ api.post('/register', (req, res) => {
     user: req.body.email
   }).toArray((err, users) => {
     if (!err && users.length == 0) {
+      //---imagen
+      if (!req.files) {
+        return res.json({
+          mensaje: 'no file'
+        });
+      }
+      var userProfImg = req.files.img;
+      //----datos usuario
       var newUser = {
         name: req.body.name,
         subName: req.body.subName,
@@ -85,16 +93,24 @@ api.post('/register', (req, res) => {
         pass: req.body.pass,
         email: req.body.email,
         pais: req.body.pais,
-        img: '',
+        img: userProfImg,
       };
-      db.collection('users').insert(newUser, (errInsert) => {
-        if (!errInsert) {
-          res.json({
-            mensaje: 'registered'
+      userProfImg.mv(path.join(__dirname, `public/images/profileImg/${userProfImg.name}`), (err) => {
+        if (!err) {
+          db.collection('users').insert(newUser, (errInsert) => {
+            if (!errInsert) {
+              res.json({
+                mensaje: 'registered'
+              });
+            } else {
+              res.json({
+                mensaje: 'could not create user'
+              });
+            }
           });
         } else {
           res.json({
-            mensaje: 'could not create user'
+            mensaje: 'coud not create user (check img)'
           });
         }
       });
@@ -105,27 +121,7 @@ api.post('/register', (req, res) => {
     };
   });
 });
-/*
-api.post('/api/uploadProfImg/:email', (req, res) => {
-  if (!req.files) {
-    return res.json({ mensaje: 'no profile image' });
-  }
-  var foto = req.files.img;
-  foto.mv(path.join(__dirname, 'Public/images/profileImg/${foto.name}'), (err) => {
-    if (!err) {
-      res.json({ mensaje: 'Image was moved to folder'});
 
-      db.collection('users').updateOne({ email: req.params.email}, {
-        $set: {
-          img: foto.name
-        }
-      });
-    } else {
-      res.json({ mensaje: 'could update image', error: err});
-    }
-  });
-});
-*/
 api.post('/upload/:user', (req, res) => {
   if (!req.files) {
     return res.json({
@@ -191,7 +187,18 @@ api.post('api/post/:img/likes', (req, res) => {
     $push: {
       likes: req.body.user
     }
-  })
+  });
+});
+
+api.post('api/post/:img/comments', (req, res) => {
+  db.collection('posts').updateOne({
+    user: req.body.user,
+    img: req.body.img
+  }, {
+    $push: {
+      comments: req.body.comment
+    }
+  });
 });
 
 module.exports = api;

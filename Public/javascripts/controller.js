@@ -6,20 +6,9 @@ var controller = function controller(view) {
 
   fetch('http://localhost:3000/api/users').then((res) => res.json()).then((res) => {
     if (res.mensaje == 'ok') {
-      // console.log(res.users);
+      console.log(res.users);
     }
   });
-
-  fetch(`http://localhost:3000/api/home`)
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.mensaje == 'ok') {
-        view.posts = res.posts;
-        // console.log(res.posts);
-        view.render('home');
-      }
-    });
-  //REVISAR POSTS
 
   view.onLogin = function onLogin(user, pass) {
     console.log('recibido: ' + user + ' ' + pass);
@@ -59,6 +48,16 @@ var controller = function controller(view) {
     view.render('login');
   };
 
+    fetch(`http://localhost:3000/api/home`)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.mensaje == 'ok') {
+          view.posts = res.posts;
+          console.log(res.posts);
+          view.render('home');
+        }
+      });
+
   view.onUpload = function onUpload(img, description, user) {
     var params = new FormData();
     params.set('img', img);
@@ -74,38 +73,53 @@ var controller = function controller(view) {
         view.render('home');
       });
   };
-  view.render('login');
-};
 
-view.onSelectedPost = function onSelectedPost(post) {
-  var params = new FormData();
-  params.set('user', post.user);
-  params.set('img', post.img);
+  view.onSelectedPost = function onSelectedPost(post) {
+    var params = new FormData();
+    params.set('user', post.user);
+    params.set('img', post.img);
 
-  fetch(`http://localhost:3000/api/post/${post.img}`, {
-      method: 'GET',
-      body: params
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      view.post = res.post;
-      view.render('post');
-    })
-  view.render('post');
-};
+    fetch(`http://localhost:3000/api/post/${post.img}`, {
+        method: 'GET',
+        body: params
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        view.post = res.post;
+        view.render('post');
+      })
+    view.render('post');
+  };
 
-view.onLiked = function onLike(post, user){
-  var param = new URLSearchParams();
-  param.set('user', user.name);
-  param.set('img', post.img);
-  fetch(`http://localhost:3000/api/post/${post.img}/likes`, {
-    method: 'POST',
-    body: param
-  })
-  .then((res) => res.json())
-  .then((res) => {
-    console.log('liked');
-  });
+  view.onLiked = function onLike(post, user) {
+    var param = new URLSearchParams();
+    param.set('user', user.name);
+    param.set('img', post.img);
+    fetch(`http://localhost:3000/api/post/${post.img}/likes`, {
+        method: 'POST',
+        body: param
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log('liked');
+      });
+  };
+
+  view.onComment = function onComment(comment, user, post) {
+    var params = new URLSearchParams();
+    params.set('img', post.img);
+    params.set('user', user);
+    params.set('comment', comment);
+    fetch(`http://localhost:3000/api/post/${post.img}/comments`, {
+        methid: 'POST',
+        body: params
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log('new comment');
+      });
+  };
+  view.render();
 }
 
 controller(view);
