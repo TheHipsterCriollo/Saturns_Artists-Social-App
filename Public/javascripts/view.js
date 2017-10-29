@@ -1,6 +1,6 @@
 var view = {
   user: null,
-  post: null,
+  poster: null,
   posts: null,
 
   getLogin: function getLogin() {
@@ -98,23 +98,25 @@ var view = {
   },
 
   getPost: function getPost() {
+    var poster = this.poster[0];
+    console.log(poster);
     var post = document.createElement('div');
     post.setAttribute('id', 'post');
     post.innerHTML = `
       <div id='izq'>
-      <img src='Public/img/posts/${post.img}' />
+      <img src='images/posts/${poster.img}' />
       </div>
       <div id='der'>
       <div class='header'>
       <!-- userImg----->
-      <h5>${post.user}</h5>
-      <p>${post.description}</p>
+      <h5>${poster.user}</h5>
+      <p>${poster.description}</p>
       </div>
       <div clas='comments'>
       <!-- commets----->
       </div>
       <div class='comment'>
-    <input type="button" name="like" value="LIKE ${post.likes}">
+    <input type="button" name="like" value="LIKE ${poster.likes}">
     <form id="comment">
     <input type="text" name="comentario" placeholder="Da tu opinion"><br>
     <input type="submit">
@@ -122,6 +124,7 @@ var view = {
     </div>
     </div>
     `;
+    var that = this;
     post.querySelectorAll('input')[0].addEventListener('click', (e) => {
       e.preventDefault();
       console.log('soy un like');
@@ -129,34 +132,12 @@ var view = {
     });
     post.querySelector('form').addEventListener('submit', (e) => {
       e.preventDefault();
-      that.onComment(e.target.comentario.value, this.user.user, this.post);
+      that.onComment(e.target.comentario.value, this.user.user, poster);
     });
     return post;
   },
 
-  getPosts: function getPosts() {
-    console.log(posts);
-    //console.log('wubba lubba dub dub: ' + this.posts);
-    var biblioteca = document.createElement('div');
-    biblioteca.setAttribute('id', 'biblioteca');
-    biblioteca.innerHTML = `
-    <button> SUBIR </button>
-    `;
-    var that = this;
-    biblioteca.querySelector('button').addEventListener('click', (e) => {
-      e.preventDefault();
-      that.render('upload');
-    });
-    var posts = this.posts;
-    var that = this;
-    posts.forEach(function(post) {
-      var post = that.getEachPost(post);
-      biblioteca.appendChild(post);
-    });
-    return biblioteca;
-  },
-
-  getEachPost: function getEachPost(post) {
+  getAllPost: function getAllPost(post) {
     var postH = document.createElement('div');
     postH.setAttribute('id', 'postH');
     postH.innerHTML = `
@@ -175,30 +156,47 @@ var view = {
     return postH;
   },
 
+  getPosts: function getPosts() {
+    if (!this.posts) return;
+
+    console.log(this.user, this.posts);
+
+    var biblioteca = document.createElement('div');
+    biblioteca.setAttribute('id', 'biblioteca');
+    biblioteca.innerHTML = `
+    <image id="profilePic" src="images/profileImg/${this.user.img}" />
+    <a class='uploadBtn'><img src="images/img/Upload.png" width="80px" height= "80px"></a>
+    `;
+    var that = this;
+    biblioteca.querySelector('a').addEventListener('click', (e) => {
+      e.preventDefault();
+      that.render('upload');
+    });
+    var posts = this.posts;
+    posts.reverse().forEach(function(post) {
+      var post = that.getAllPost(post);
+      biblioteca.appendChild(post);
+    });
+    return biblioteca;
+  },
+
   render: function(pagina) {
     var container = document.getElementById('container');
     container.innerHTML = '';
-
-    var login = this.getLogin();
-    var registro = this.getRegistro();
-    var upload = this.getUpload();
-    var post = this.getPost();
-    var home = this.getPosts();
-
     switch (pagina) {
-      default: container.appendChild(login);
+      default: container.appendChild(this.getLogin());
       break;
       case 'post':
-          container.appendChild(post);
+          container.appendChild(this.getPost());
         break;
       case 'home':
-          container.appendChild(home);
+          container.appendChild(this.getPosts());
         break;
       case 'register':
-          container.appendChild(registro);
+          container.appendChild(this.getRegistro());
         break;
       case 'upload':
-          container.appendChild(upload);
+          container.appendChild(this.getUpload());
         break;
     }
   }

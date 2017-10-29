@@ -13,6 +13,7 @@
   src: url('fonts/GOTHAM-THIN.TTF') format('truetype');
 }
 */
+
 body, html {
   margin: 0px;
   padding: 0px;
@@ -28,7 +29,6 @@ body, html {
 /*---LOGIN---*/
 
 body {
-
   background-color: #26223e;
 }
 
@@ -62,10 +62,10 @@ body {
   font-family: gothamThin;
   font-size: 22px;
   color: white;
-    text-decoration: none;
+  text-decoration: none;
 }
 
-#formularioLogin a{
+#formularioLogin a {
   font-family: gothamBold;
 }
 
@@ -106,10 +106,13 @@ body {
 }
 
 .images img {
-    margin: 0 15px;
+  margin: 0 15px;
 }
 
+
 /*------*/
+
+
 /*---REGISTRO---*/
 
 #registro {
@@ -123,7 +126,6 @@ body {
 }
 
 #registro input {
-
   width: 300px;
   height: 45px;
   font-family: gothamThin;
@@ -159,7 +161,7 @@ body {
   border-radius: 45px;
   font-family: gotham;
   font-size: 26px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   -o-text-overflow: clip;
   text-overflow: clip;
   background: #26223e;
@@ -175,17 +177,58 @@ body {
   text-decoration: none;
 }
 
+
 /*------*/
-/*---Each post---*/
-body {
-  background-color: white;
+
+
+/*---Biblioteca---*/
+
+#biblioteca .uploadBtn img {
+  margin-left: 40%;
+  z-index: 3;
+  margin-top: 620px;
+  position: fixed;
 }
+
+#biblioteca {
+  background-image: url(images/img/Logo.png);
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  background: white;
+  min-height: 400px;
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+#biblioteca:after {
+  display: block;
+  content: " invisible node "
+  flex(999 999 auto)
+}
+
+
+/*------*/
+
+/*---Each post---*/
+
+/*body {
+  background-color: white;
+}*/
+
 #postH {
-width: 20%;
-background-color: white;
--webkit-box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.5);
--moz-box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.5);
-box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.5);
+  flex: 0 0 auto;
+  margin: 10px;
+  width: 20%;
+  background-color: white;
+  -webkit-box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.5);
 }
 
 #postH .footer {
@@ -207,4 +250,6 @@ box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.5);
 #postH img {
   width: 100%;
 }
+
+
 /*------*/

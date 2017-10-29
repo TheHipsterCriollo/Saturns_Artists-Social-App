@@ -21,12 +21,12 @@ var controller = function controller(view) {
       })
       .then((res) => res.json())
       .then((res) => {
+        // console.log(res);
         if (res.mensaje == 'logged') {
-          console.log(res);
           view.user = res.user;
-          console.log('logged');
-          view.render('home');
-        }
+          console.log('logged as: ', res.user.user);
+          view.onHome(res.user.user);
+        };
       });
   };
 
@@ -48,15 +48,24 @@ var controller = function controller(view) {
     view.render('login');
   };
 
-    fetch(`http://localhost:3000/api/home`)
+  view.onHome = function onHome(user) {
+    var param = new URLSearchParams();
+    param.set('user', user);
+    console.log(user);
+    fetch(`http://localhost:3000/api/${user}/home`, {
+        method: 'POST',
+        body: param
+      })
       .then((res) => res.json())
       .then((res) => {
         if (res.mensaje == 'ok') {
           view.posts = res.posts;
-          console.log(res.posts);
           view.render('home');
+        } else {
+          view.render('login');
         }
       });
+  };
 
   view.onUpload = function onUpload(img, description, user) {
     var params = new FormData();
@@ -70,32 +79,34 @@ var controller = function controller(view) {
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        view.render('home');
+        view.onHome(user.user);
       });
   };
 
   view.onSelectedPost = function onSelectedPost(post) {
-    var params = new FormData();
+    console.log(post);
+
+    var params = new URLSearchParams();
     params.set('user', post.user);
     params.set('img', post.img);
 
-    fetch(`http://localhost:3000/api/post/${post.img}`, {
-        method: 'GET',
+    fetch(`http://localhost:3000/api/${post.user}/home/${post._id}`, {
+        method: 'POST',
         body: params
       })
       .then((res) => res.json())
       .then((res) => {
-        view.post = res.post;
+        view.poster = res.post;
+        console.log(res.post);
         view.render('post');
-      })
-    view.render('post');
+      });
   };
 
   view.onLiked = function onLike(post, user) {
     var param = new URLSearchParams();
     param.set('user', user.name);
     param.set('img', post.img);
-    fetch(`http://localhost:3000/api/post/${post.img}/likes`, {
+    fetch(`http://localhost:3000/api/${post.user}/home/${post._id}/comments`, {
         method: 'POST',
         body: param
       })
@@ -106,12 +117,13 @@ var controller = function controller(view) {
   };
 
   view.onComment = function onComment(comment, user, post) {
+    console.log(comment, user, post.img);
     var params = new URLSearchParams();
     params.set('img', post.img);
     params.set('user', user);
     params.set('comment', comment);
-    fetch(`http://localhost:3000/api/post/${post.img}/comments`, {
-        methid: 'POST',
+    fetch(`http://localhost:3000/api/${post.user}/home/${post._id}/comments`, {
+        method: 'POST',
         body: params
       })
       .then((res) => res.json())
@@ -119,6 +131,7 @@ var controller = function controller(view) {
         console.log('new comment');
       });
   };
+
   view.render();
 }
 

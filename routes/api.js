@@ -38,7 +38,8 @@ api.get('/users', (req, res) => {
     })
 });
 
-api.get('/home', (req, res) => {
+api.post('/:user/home', (req, res) => {
+  if (req.body.user != null) {
   db.collection('posts')
     .find({})
     .toArray((err, posts) => {
@@ -52,7 +53,10 @@ api.get('/home', (req, res) => {
           mensaje: 'could not load all posts or there is no any post'
         });
       }
-    })
+    });
+  } else {
+    res.json({ mensaje: 'there is no any user logged' });
+  }
 });
 
 api.post('/login', (req, res) => {
@@ -131,15 +135,12 @@ api.post('/upload/:user', (req, res) => {
   var upload = req.files.img;
   upload.mv(path.join(__dirname, `../Public/images/posts/${upload.name}`), (err) => {
     if (!err) {
-      res.json({
-        mensaje: 'Image was moved to folder'
-      });
       var newPost = {
         user: req.params.user,
         img: upload.name,
         description: req.body.description,
         likes: [],
-        comments: {}
+        comments: []
       };
       db.collection('posts').insert(newPost, (err) => {
         if (!err) {
@@ -161,7 +162,8 @@ api.post('/upload/:user', (req, res) => {
   });
 });
 
-api.get('api/post/:img', (req, res) => {
+api.post('/:user/home/:_id', (req, res) => {
+  console.log(req.body.user, req.body.img);
   db.collection('posts').find({
     user: req.body.user,
     img: req.body.img
@@ -176,10 +178,10 @@ api.get('api/post/:img', (req, res) => {
         mensaje: 'could load post'
       });
     }
-  })
+  });
 });
 
-api.post('api/post/:img/likes', (req, res) => {
+api.post('/:user/home/:_id/likes', (req, res) => {
   db.collection('posts').updateOne({
     user: req.body.user,
     img: req.body.img
@@ -190,7 +192,7 @@ api.post('api/post/:img/likes', (req, res) => {
   });
 });
 
-api.post('api/post/:img/comments', (req, res) => {
+api.post('/:user/home/:_id/comments', (req, res) => {
   db.collection('posts').updateOne({
     user: req.body.user,
     img: req.body.img
