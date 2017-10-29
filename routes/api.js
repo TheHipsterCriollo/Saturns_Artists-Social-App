@@ -99,7 +99,7 @@ api.post('/register', (req, res) => {
         pais: req.body.pais,
         img: userProfImg,
       };
-      userProfImg.mv(path.join(__dirname, `public/images/profileImg/${userProfImg.name}`), (err) => {
+      userProfImg.mv(path.join(__dirname, `../Public/images/profileImg/${userProfImg.name}`), (err) => {
         if (!err) {
           db.collection('users').insert(newUser, (errInsert) => {
             if (!errInsert) {
@@ -114,7 +114,8 @@ api.post('/register', (req, res) => {
           });
         } else {
           res.json({
-            mensaje: 'coud not create user (check img)'
+            mensaje: 'coud not create user (check img)',
+            err: err
           });
         }
       });
