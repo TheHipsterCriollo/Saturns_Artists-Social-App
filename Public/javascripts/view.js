@@ -164,7 +164,7 @@ var view = {
     var biblioteca = document.createElement('div');
     biblioteca.setAttribute('id', 'biblioteca');
     biblioteca.innerHTML = `
-    <image id="profilePic" src="images/profileImg/${this.user.img}" />
+    <image id="profilePic" src="images/profileImg/${this.user.img.name}" />
     <a class='uploadBtn'><img src="images/img/Upload.png" width="80px" height= "80px"></a>
     `;
     var that = this;
