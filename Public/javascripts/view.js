@@ -108,7 +108,6 @@ var view = {
       </div>
       <div id='der'>
       <div class='header'>
-      <!-- userImg----->
       <h5>${poster.user}</h5>
       <p>${poster.description}</p>
       </div>
@@ -118,8 +117,8 @@ var view = {
       <div class='comment'>
     <input type="button" name="like" value="LIKE ${poster.likes}">
     <form id="comment">
-    <input type="text" name="comentario" placeholder="Da tu opinion"><br>
-    <input type="submit">
+    <input type="text" class="comentario" name="comentario" placeholder="Da tu opinion"><br>
+    <input type="submit" class="env">
     </form>
     </div>
     </div>

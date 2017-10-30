@@ -18,11 +18,12 @@ body, html {
   margin: 0px;
   padding: 0px;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 * {
   box-sizing: border-box;
-  font-family: gotham;
+  font-family: 'Roboto';
 }
 
 
@@ -311,7 +312,7 @@ body {
   color: rgba(255, 255, 255, 0.9);
   -o-text-overflow: clip;
   text-overflow: clip;
-  background: #26223e;
+  background: #f7675e;
 }
 
 
@@ -346,9 +347,65 @@ body {
 #post #der {
   float: right;
   width: 30%;
-  padding: 5%;
 }
 
+#post .comentario {
+  margin: 5px auto;
+  width: 300px;
+  height: 140px;
+  font-family: gothamThin;
+  padding: 5px;
+  font-size: 24px;
+  border-width: 0px;
+  border-color: black;
+  color: black;
+  border-style: solid;
+  border-radius: 15px;
+  -webkit-box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+}
+
+#post .header {
+  position: absolute;
+  text-align: center;
+  width: 345px;
+  height: 120px;
+  -webkit-box-shadow: 0px 5px 25px -1px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 5px 25px -1px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 5px 25px -1px rgba(0, 0, 0, 0.52);
+}
+
+#post .header h5 {
+  color: #f7675e;
+}
+
+#post .comment {
+  background-color: #26223e;
+  margin-top: 459px;
+  width: 345px;
+  height: 261px;
+  padding: 20px;
+}
+
+#post .env {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  float: right;
+  cursor: pointer;
+  padding: 5px;
+  border-style: none;
+  -webkit-border-radius: 45px;
+  border-radius: 45px;
+  font-family: gotham;
+  font-size: 26px;
+  color: rgba(255, 255, 255, 0.9);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: #f26522;
+}
 
 
 /*------*/
