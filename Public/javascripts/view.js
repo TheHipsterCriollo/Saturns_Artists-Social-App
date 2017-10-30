@@ -11,7 +11,7 @@ var view = {
     <form id="login">
     <input type="text" name="user" placeholder="Usuario" /><br>
     <input type="password" name="pass" placeholder="Contraseña" /><br>
-    <span>Si no tienes cuenta </span><a>regístrate</a>
+    <span>Si no tienes cuenta </span><a><u>regístrate</u></a>
     <input type="submit" style="display: none" />
     </form>
     <div id="saturns"><h1>SATURNS</h1><h4>take your design to higher level</h4></div>
@@ -85,8 +85,8 @@ var view = {
     <input type="file" id="images" name="img"
          accept=".jpg, .jpeg, .png">
     <h3>Comenta:</h3>
-    <input type="text" name="description"><br>
-    <input type="submit">
+    <input type="text" name="description" class="desc"><br>
+    <input type="submit" class="submitPost">
     </form>
     `;
     that = this;
@@ -104,7 +104,7 @@ var view = {
     post.setAttribute('id', 'post');
     post.innerHTML = `
       <div id='izq'>
-      <img src='images/posts/${poster.img}' />
+      <img src='images/posts/${poster.img}' class="postImg" />
       </div>
       <div id='der'>
       <div class='header'>
@@ -164,7 +164,7 @@ var view = {
     var biblioteca = document.createElement('div');
     biblioteca.setAttribute('id', 'biblioteca');
     biblioteca.innerHTML = `
-    <image id="profilePic" src="images/profileImg/${this.user.img.name}" />
+    <div id="profilePic"> <image src="images/profileImg/${this.user.img.name}" width='80px' height='80px'/> </div>
     <a class='uploadBtn'><img src="images/img/Upload.png" width="80px" height= "80px"></a>
     `;
     var that = this;

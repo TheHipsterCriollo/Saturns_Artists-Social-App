@@ -118,14 +118,15 @@ body {
 #registro {
   margin-top: 100px;
   margin-left: 22.5%;
-  column-count: 2;
+  padding: 15px;
   width: 55%;
-  height: 597px;
+  height: 100%;
   background-color: white;
   /*--display: flex;--*/
 }
 
 #registro input {
+  margin: 10px auto;
   width: 300px;
   height: 45px;
   font-family: gothamThin;
@@ -187,7 +188,17 @@ body {
   margin-left: 40%;
   z-index: 3;
   margin-top: 620px;
-  position: fixed;
+  /*position: fixed;*/
+}
+
+#biblioteca #profilePic {
+  position: absolute;
+  margin-left: 450px;
+  z-index: 100;
+  padding: 7px;
+  width: 95px;
+  height: 95px;
+  background: linear-gradient(45deg, rgba(248, 143, 30, 1) 0%, rgba(236, 31, 51, 1) 50%, rgba(110, 44, 140, 1) 100%);
 }
 
 #biblioteca {
@@ -208,14 +219,15 @@ body {
 
 #biblioteca:after {
   display: block;
-  content: " invisible node "
-  flex(999 999 auto)
+  content: " invisible node " flex(999 999 auto)
 }
 
 
 /*------*/
 
+
 /*---Each post---*/
+
 
 /*body {
   background-color: white;
@@ -250,6 +262,93 @@ body {
 #postH img {
   width: 100%;
 }
+
+
+/*------*/
+
+
+/*---Upload---*/
+
+#uploadPost {
+  background: white;
+  width: 50%;
+  height: 450px;
+  margin-left: 25%;
+  margin-top: 150px;
+  padding: 15px;
+}
+
+#uploadPost .desc {
+  margin: 10px auto;
+  width: 450px;
+  height: 200px;
+  font-family: gothamThin;
+  padding: 5px;
+  font-size: 24px;
+  border-width: 0px;
+  border-color: black;
+  color: black;
+  border-style: solid;
+  border-radius: 34px;
+  -webkit-box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+}
+
+#uploadPost .submitPost {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  float: right;
+  cursor: pointer;
+  padding: 5px;
+  border-style: none;
+  -webkit-border-radius: 45px;
+  border-radius: 45px;
+  font-family: gotham;
+  font-size: 26px;
+  color: rgba(255, 255, 255, 0.9);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: #26223e;
+}
+
+
+/*------*/
+
+
+/*---Post---*/
+
+#post {
+  width: 90%;
+  height: 720px;
+  float: right;
+  background: white;
+}
+
+#post #izq {
+  float: left;
+  width: 70%;
+  -webkit-box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  box-shadow: inset 0px 0px 25px -1px rgba(0, 0, 0, 0.52);
+  height: 720px;
+}
+
+#post img {
+  padding: 5px;
+  position: relative;
+  width: 100%;
+  margin-top: 95px;
+}
+
+#post #der {
+  float: right;
+  width: 30%;
+  padding: 5%;
+}
+
 
 
 /*------*/
